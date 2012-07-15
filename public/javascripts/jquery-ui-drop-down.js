@@ -2,20 +2,36 @@
 	$.widget("demo.dropdown", {
 
 		options: {
-		    clear: null
+		    clear: null,
+				values: []
 		},
 
 		_create: function() {
 			var self = this;
-			this.list = $( "<ul>" ).insertAfter( this.element );
-			this.list.addClass('drop_down_bla');
-			console.log('bla');
+			self.list = $( "<ul>" ).insertAfter( self.element );
+			self.list.addClass('jq_drop_down').hide();
+
+			$(self.options.values).each(function(i,value) {
+				$('<li>').text(value).appendTo(self.list);
+			});
+			
+			$(self.element).on('focus', function() {
+				$(self.list).show();
+			});
+			$(self.element).on('blur', function() {
+				$(self.list).hide();
+			});
 		},
 
 		_setOption: function(key, value) {
 			switch (key) {
 			case "clear":
+					console.log("clear");
 			    break;
+			case "values":
+				console.log("values");
+				this.options.values = value;
+				break;
 			}
 
 			$.Widget.prototype._setOption.apply(this, arguments);
