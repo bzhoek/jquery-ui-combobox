@@ -9,7 +9,7 @@ describe("Drop-down fixture", function() {
   });
 
   it("should have only one drop-down", function() {
-    expect($('.drop_down').length).toBe(1);
+    expect($('.drop_down').length).toBe(2);
   });
 
 });
