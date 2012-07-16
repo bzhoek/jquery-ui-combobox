@@ -38,22 +38,39 @@ describe("Drop-down", function() {
   it("should select first choice on first arrow down", function() {
 		subject.focus();
 		subject.trigger(keydown('DOWN'));
-    expect(widget).toBeVisible();
     expect(subject.dropdown("selectedIndex")).toBe(0);
-  });
-
-  it("should change value on first arrow down", function() {
-		subject.focus();
-		subject.trigger(keydown('DOWN'));
-    expect(widget).toBeVisible();
     expect(subject.val()).toBe("First choice");
   });
 
   it("should stick to last choice on many arrow down", function() {
 		subject.focus();
 		$(4).times(function(){ subject.trigger(keydown('DOWN')) });
-    expect(widget).toBeVisible();
     expect(subject.dropdown("selectedIndex")).toBe(2);
+    expect(subject.val()).toBe("Third choice");
+  });
+
+  it("should select last choice on first arrow up", function() {
+		subject.focus();
+		subject.trigger(keydown('UP'));
+    expect(subject.dropdown("selectedIndex")).toBe(2);
+    expect(subject.val()).toBe("Third choice");
+  });
+
+  it("should stick to first choice on many arrow up", function() {
+		subject.focus();
+    $(4).times(function(){ subject.trigger(keydown('UP')) });
+    expect(subject.dropdown("selectedIndex")).toBe(0);
+    expect(subject.val()).toBe("First choice");
+  });
+
+  it("should return to original value on escape", function() {
+		subject.focus();
+    subject.trigger(keydown('DOWN'));
+    expect(subject.dropdown("selectedIndex")).toBe(0);
+    expect(subject.val()).toBe("First choice");
+    subject.trigger(keydown('ESCAPE'));
+    expect(subject.dropdown("selectedIndex")).toBe(-1);
+    expect(subject.val()).toBe("");
   });
 
 });

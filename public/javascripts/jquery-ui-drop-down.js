@@ -54,16 +54,31 @@
 
 			$.Widget.prototype._setOption.apply(this, arguments);
 		},
-		
+
+    _setValueFromIndex: function(i) {
+      this.valueIndex = i;
+      $(this.element).val(i == -1 ? "" : this.options.values[i]);
+    },
+
 		_keyDown: function(e) {
 			var self = this;
 			var keyCode = $.ui.keyCode;
 			var values = this.options.values;
 			switch(e.which) {
+        case keyCode.ESCAPE:
+          $(self.element).val(self.options.originalValue);
+          self.valueIndex = self.options.values.indexOf(self.options.originalValue);
+          break;
+				case keyCode.UP:
+					if(self.valueIndex > 0) {
+            self._setValueFromIndex(self.valueIndex-1);
+					} else if(self.valueIndex == -1) {
+            self._setValueFromIndex(values.length-1);
+          }
+					break;
 				case keyCode.DOWN:
 					if(self.valueIndex < values.length-1) {
-						self.valueIndex++;
-						$(self.element).val(values[self.valueIndex]);
+            self._setValueFromIndex(self.valueIndex+1);
 					}
 					break;
 			}
