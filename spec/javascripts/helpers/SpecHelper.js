@@ -1,7 +1,13 @@
 function keydown(name) {
 	var e = jQuery.Event("keydown");
-	e.keyCode = $.ui.keyCode[name];
+	e.which = e.keyCode = $.ui.keyCode[name];
 	return e;
+}
+
+jQuery.fn.times = function(f) {
+	for(i = 0; i < this[0]; i++) {
+		f(i);
+	}
 }
 
 beforeEach(function() {
