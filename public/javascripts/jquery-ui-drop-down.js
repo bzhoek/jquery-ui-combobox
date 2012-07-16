@@ -3,6 +3,7 @@
 
 		options: {
 		    clear: null,
+				selectedValue: null,
 				values: []
 		},
 
@@ -10,12 +11,21 @@
 			return this.list;
 		},
 		
+		selectedIndex: function() {
+			return this.valueIndex;
+		},
+		
 		_create: function() {
 			var self = this;
+			var options = self.options;
+			
+			options.selectedValue = options.selectedValue ? options.selectedValue : $(self.element).val();
+			self.valueIndex = options.values.indexOf(options.selectedValue);
+			
 			self.list = $( "<ul>" ).insertAfter(self.element);
 			self.list.addClass('jq_drop_down').hide();
 
-			$(self.options.values).each(function(i,value) {
+			$(options.values).each(function(i,value) {
 				$('<li>').text(value).appendTo(self.list);
 			});
 			
@@ -27,7 +37,6 @@
 			});
 			
 			$(self.element).on('keydown', $.proxy(this._keyDown, this));
-			
 		},
 
 		_setOption: function(key, value) {

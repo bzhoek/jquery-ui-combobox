@@ -2,6 +2,7 @@ describe("Drop-down", function() {
 
 	var subject;
 	var widget;
+	var filled;
 
   beforeEach(function() {
     loadFixtures('drop_down_fixture.html');
@@ -9,6 +10,12 @@ describe("Drop-down", function() {
 			values: ["First choice", "Second choice", "Third choice"]
 		});
 		widget = subject.dropdown('widget')
+		
+		filled = $('input[name=drop_down_filled]').dropdown({
+			values: ["First choice", "Second choice", "Third choice"],
+			selectedValue: "Second choice"
+		});
+		
   });
 	
   it("should have hidden drop-down choices", function() {
@@ -37,6 +44,45 @@ describe("Drop-down", function() {
 		subject.focus();
 		subject.trigger(keydown('DOWN'));
     expect(widget).toBeVisible();
+  });
+
+});
+
+describe("Filled Drop-down from constructor", function() {
+
+	var subject;
+	var widget;
+
+  beforeEach(function() {
+    loadFixtures('drop_down_fixture.html');
+		subject = $('input[name=drop_down_filled]').dropdown({
+			values: ["First choice", "Second choice", "Third choice"],
+			selectedValue: "Second choice"
+		});
+		widget = subject.dropdown('widget')
+  });
+	
+  it("should set valueIndex based on value", function() {
+    expect(subject.dropdown("selectedIndex")).toBe(1);
+  });
+
+});
+
+describe("Filled Drop-down from value", function() {
+
+	var subject;
+	var widget;
+
+  beforeEach(function() {
+    loadFixtures('drop_down_fixture.html');
+		subject = $('input[name=drop_down_filled]').dropdown({
+			values: ["First choice", "Second choice", "Third choice"]
+		});
+		widget = subject.dropdown('widget')
+  });
+	
+  it("should set valueIndex based on value", function() {
+    expect(subject.dropdown("selectedIndex")).toBe(2);
   });
 
 });
