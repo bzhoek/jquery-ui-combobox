@@ -11,11 +11,6 @@ describe("Drop-down", function() {
 		});
 		widget = subject.dropdown('widget')
 		
-		filled = $('input[name=drop_down_filled]').dropdown({
-			values: ["First choice", "Second choice", "Third choice"],
-			selectedValue: "Second choice"
-		});
-		
   });
 	
   it("should have hidden drop-down choices", function() {
@@ -30,20 +25,35 @@ describe("Drop-down", function() {
     expect($('li:nth-child(1)', widget).text()).toBe('First choice');
   });
 
-  it("should hide drop-down choices on blur", function() {
+  it("should hide choices on blur", function() {
 		subject.focus().blur();
     expect(widget).toBeHidden();
   });
 
-  it("should show drop-down choices on focus", function() {
+  it("should show choices on focus", function() {
 		subject.focus();
     expect(widget).toBeVisible();
   });
 
-  it("should show drop-down choices on focus", function() {
+  it("should select first choice on first arrow down", function() {
 		subject.focus();
 		subject.trigger(keydown('DOWN'));
     expect(widget).toBeVisible();
+    expect(subject.dropdown("selectedIndex")).toBe(0);
+  });
+
+  it("should change value on first arrow down", function() {
+		subject.focus();
+		subject.trigger(keydown('DOWN'));
+    expect(widget).toBeVisible();
+    expect(subject.val()).toBe("First choice");
+  });
+
+  it("should stick to last choice on many arrow down", function() {
+		subject.focus();
+		$(4).times(function(){ subject.trigger(keydown('DOWN')) });
+    expect(widget).toBeVisible();
+    expect(subject.dropdown("selectedIndex")).toBe(2);
   });
 
 });

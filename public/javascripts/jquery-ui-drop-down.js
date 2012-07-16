@@ -56,6 +56,17 @@
 		},
 		
 		_keyDown: function(e) {
+			var self = this;
+			var keyCode = $.ui.keyCode;
+			var values = this.options.values;
+			switch(e.which) {
+				case keyCode.DOWN:
+					if(self.valueIndex < values.length-1) {
+						self.valueIndex++;
+						$(self.element).val(values[self.valueIndex]);
+					}
+					break;
+			}
 			// console.log(this.options.values);
 			// console.log(this.list);
 			// console.log(this.element);
