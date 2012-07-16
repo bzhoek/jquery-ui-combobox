@@ -19,7 +19,9 @@
 			var self = this;
 			var options = self.options;
 			
-			options.selectedValue = options.selectedValue ? options.selectedValue : $(self.element).val();
+			options.selectedValue = options.selectedValue || $(self.element).val();
+			options.originalValue = options.selectedValue
+			
 			self.valueIndex = options.values.indexOf(options.selectedValue);
 			
 			self.list = $( "<ul>" ).insertAfter(self.element);
