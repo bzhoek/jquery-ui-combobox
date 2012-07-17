@@ -32,10 +32,10 @@
 			});
 			
 			$(self.element).on('focus', function() {
-				$(self.list).show();
+				self.list.show();
 			});
 			$(self.element).on('blur', function() {
-				$(self.list).hide();
+				self.list.hide();
 			});
 			
 			$(self.element).on('keydown', $.proxy(this._keyDown, this));
