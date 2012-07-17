@@ -16,6 +16,7 @@
 		},
 		
 		_create: function() {
+			console.log(this);
 			var self = this;
 			var options = self.options;
 			
@@ -56,8 +57,15 @@
 		},
 
     _setValueFromIndex: function(i) {
+			var self = this;
+			var items = $(self.list).find('li');
       this.valueIndex = i;
       $(this.element).val(i == -1 ? "" : this.options.values[i]);
+
+			items.removeClass('selected');
+			if(i != -1) {
+				$(items.get(i)).addClass('selected')
+			}
     },
 
 		_keyDown: function(e) {
@@ -70,10 +78,8 @@
           self.valueIndex = self.options.values.indexOf(self.options.originalValue);
           break;
 				case keyCode.UP:
-					if(self.valueIndex > 0) {
+					if(self.valueIndex > -1) {
             self._setValueFromIndex(self.valueIndex-1);
-					} else if(self.valueIndex == -1) {
-            self._setValueFromIndex(values.length-1);
           }
 					break;
 				case keyCode.DOWN:

@@ -49,18 +49,22 @@ describe("Drop-down", function() {
     expect(subject.val()).toBe("Third choice");
   });
 
-  it("should select last choice on first arrow up", function() {
+  it("should remain unchanged on first arrow up", function() {
 		subject.focus();
+    expect(subject.dropdown("selectedIndex")).toBe(-1);
 		subject.trigger(keydown('UP'));
-    expect(subject.dropdown("selectedIndex")).toBe(2);
-    expect(subject.val()).toBe("Third choice");
+    expect(subject.dropdown("selectedIndex")).toBe(-1);
+    expect(subject.val()).toBe("");
   });
 
-  it("should stick to first choice on many arrow up", function() {
+  it("should revert to empty on many arrow up", function() {
 		subject.focus();
+    $(2).times(function(){ subject.trigger(keydown('DOWN')) });
+    expect(subject.dropdown("selectedIndex")).toBe(1);
+    expect(subject.val()).toBe("Second choice");
     $(4).times(function(){ subject.trigger(keydown('UP')) });
-    expect(subject.dropdown("selectedIndex")).toBe(0);
-    expect(subject.val()).toBe("First choice");
+    expect(subject.dropdown("selectedIndex")).toBe(-1);
+    expect(subject.val()).toBe("");
   });
 
   it("should return to original value on escape", function() {
