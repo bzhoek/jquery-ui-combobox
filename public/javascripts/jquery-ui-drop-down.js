@@ -42,6 +42,9 @@
 				item.on('mouseover', function(e) {
 					anchor.addClass('ui-state-hover')
 				});
+				item.on('mousemove', function(e) {
+					anchor.addClass('ui-state-hover')
+				});
 				item.on('mouseout', function(e) {
 					anchor.removeClass('ui-state-hover');
 				});
@@ -79,14 +82,10 @@
 			$.Widget.prototype._setOption.apply(this, arguments);
 		},
 
-		_itemClick: function(e) {
-			console.log(e);
-		},
-		
 		_inputKeyPress: function(e) {
 			var chr = String.fromCharCode(e.charCode);
 			var control = e.altKey || e.metaKey || e.ctrlKey;
-			if(!control && chr.match(/^[0-9a-zA-Z]+$/)) {
+			if(!control && chr.length > 0) {
 				e.preventDefault();
 			}
 		},
@@ -97,24 +96,27 @@
 			var values = this.options.values;
 			
 			switch(e.which) {
-        case keyCode.TAB:
-					break;
+        case keyCode.ENTER:
+					self.list.hide();
+        	break;
         case keyCode.ESCAPE:
           $(self.element).val(self.options.originalValue);
           self.valueIndex = self.options.values.indexOf(self.options.originalValue);
 					self.list.hide();
           break;
 				case keyCode.UP:
-					if(self.valueIndex > -1) {
+					if( !self.list.is(':visible')) {
+						self.list.show();
+					} else if(self.valueIndex > -1) {
             self._setValueFromIndex(self.valueIndex-1);
           }
-					self.list.show();
 					break;
 				case keyCode.DOWN:
-					if(self.valueIndex < values.length-1) {
+					if( !self.list.is(':visible')) {
+						self.list.show();
+					} else if(self.valueIndex < values.length-1) {
             self._setValueFromIndex(self.valueIndex+1);
 					}
-					self.list.show();
 					break;
 			}
 		},
@@ -125,6 +127,7 @@
       this.valueIndex = i;
       $(this.element).val(i == -1 ? "" : this.options.values[i]);
 
+			self.list.find('a').removeClass('ui-state-hover');
 			items.removeClass('ui-state-focus');
 			if(i != -1) {
 				$(items.get(i)).addClass('ui-state-focus')
