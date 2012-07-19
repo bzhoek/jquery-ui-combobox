@@ -96,6 +96,9 @@
 			var values = this.options.values;
 			
 			switch(e.which) {
+        case keyCode.SPACE:
+					self.list.show();
+        	break;
         case keyCode.ENTER:
 					self.list.hide();
         	break;
