@@ -90,6 +90,14 @@
 			}
 		},
 		
+		_wasVisible: function() {
+			if( this.list.is(':visible')) {
+				return true;
+			}
+			this.list.show();
+			return false;
+		},
+		
 		_inputKeyDown: function(e) {
 			var self = this;
 			var keyCode = $.ui.keyCode;
@@ -108,16 +116,12 @@
 					self.list.hide();
           break;
 				case keyCode.UP:
-					if( !self.list.is(':visible')) {
-						self.list.show();
-					} else if(self.valueIndex > -1) {
+					if(self._wasVisible() && self.valueIndex > -1) {
             self._setValueFromIndex(self.valueIndex-1);
           }
 					break;
 				case keyCode.DOWN:
-					if( !self.list.is(':visible')) {
-						self.list.show();
-					} else if(self.valueIndex < values.length-1) {
+					if(self._wasVisible() && self.valueIndex < values.length-1) {
             self._setValueFromIndex(self.valueIndex+1);
 					}
 					break;
