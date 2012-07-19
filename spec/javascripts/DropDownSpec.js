@@ -95,7 +95,7 @@ describe("Drop-down", function() {
 
 });
 
-describe("Filled Drop-down from constructor", function() {
+describe("Filled drop-down from constructor", function() {
 
 	var subject;
 	var widget;
@@ -115,7 +115,7 @@ describe("Filled Drop-down from constructor", function() {
 
 });
 
-describe("Filled Drop-down from value", function() {
+describe("Filled drop-down from value", function() {
 
 	var subject;
 	var widget;
